@@ -30,5 +30,3 @@ Al final de cada ronda, rotarás de pareja y de "estación" (proyecto), enfrent�
 ¡Prepárate para un desafío que pondrá a prueba tus habilidades de desarrollador/a web de manera integral!
 
 **¡Mucha suerte y manos al código!**
-ghp_3Xg1EeQuVIJuMWT
-BT7KJGMcZO9XfKW0mAD85
