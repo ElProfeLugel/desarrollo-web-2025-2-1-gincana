@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gincana de Código - Gestor de Rondas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Gincana de Código</h1>
+    <div class="timers">
+      <div class="timer-block">
+        <div class="timer-label">Ronda</div>
+        <div id="roundTimer" class="timer-value">00:00</div>
+      </div>
+      <div class="timer-block">
+        <div class="timer-label">Rotación</div>
+        <div id="rotationTimer" class="timer-value muted">--:--</div>
+      </div>
+      <div class="round-indicator">
+        <span>Ronda actual:</span>
+        <strong id="roundNumber">-</strong>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="panel inputs">
+      <h2>Participantes y Configuración</h2>
+      <div class="field-group">
+        <label for="studentsInput">Estudiantes (uno por línea o separados por coma)</label>
+        <textarea id="studentsInput" rows="8" placeholder="Nombre Apellido, Nombre Apellido...\nO uno por línea"></textarea>
+        <div class="actions-row">
+          <button id="saveStudentsBtn" class="secondary">Guardar estudiantes</button>
+          <button id="pairBtn">Generar parejas y asignar</button>
+        </div>
+      </div>
+
+      <div class="field-inline">
+        <div>
+          <label for="roundMinutes">Minutos por ronda</label>
+          <input id="roundMinutes" type="number" min="1" step="1" />
+        </div>
+        <div>
+          <label for="rotationMinutes">Minutos para rotación</label>
+          <input id="rotationMinutes" type="number" min="1" step="1" />
+        </div>
+        <div class="field-actions">
+          <button id="saveTimesBtn" class="secondary">Guardar tiempos</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="startBtn" class="primary">Iniciar ronda</button>
+        <button id="pauseBtn" class="secondary">Pausar</button>
+        <button id="resumeBtn" class="secondary" style="display:none">Reanudar</button>
+      </div>
+
+      <div class="export-row">
+        <button id="exportCsvBtn" class="secondary">Exportar reporte CSV</button>
+        <button id="exportJsonBtn" class="secondary">Exportar reporte JSON</button>
+      </div>
+
+      <details class="exercises-details">
+        <summary>Ejercicios detectados (orden de asignación)</summary>
+        <ul id="exercisesList"></ul>
+      </details>
+    </section>
+
+    <section class="panel assignments">
+      <h2>Asignación actual</h2>
+      <div id="assignmentsContainer" class="assignments-grid"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>Universidad de Medellín — Examen práctico (HTML/CSS/JS) — Persistencia local</small>
+  </footer>
+
+  <script src="script.js"></script>
+  <noscript>Se requiere JavaScript para ejecutar esta aplicación.</noscript>
+</body>
+</html>
+
