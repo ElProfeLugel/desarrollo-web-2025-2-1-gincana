@@ -1,4 +1,3 @@
-
 # Calculadora de Propinas 💵
 
 ## Requerimientos:
