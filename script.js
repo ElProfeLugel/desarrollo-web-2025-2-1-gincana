@@ -12,8 +12,6 @@ const DEFAULTS = {
   rotationMinutes: 2,
 };
 
-// Obtiene ejercicios desde el árbol de carpetas definido en el repositorio
-// Los 12 ejercicios están definidos en la raíz del workspace; los enumeramos aquí.
 const EXERCISES_FIXED = [
   '01_Calculadora_Propinas',
   '02_Generador_Paletas_Colores',
@@ -120,6 +118,7 @@ const el = {
   assignmentsContainer: document.getElementById('assignmentsContainer'),
   exportCsvBtn: document.getElementById('exportCsvBtn'),
   exportJsonBtn: document.getElementById('exportJsonBtn'),
+  forceNextBtn: document.getElementById('forceNextBtn'),
 };
 
 // Inicialización
@@ -161,6 +160,7 @@ function init() {
   el.resumeBtn.addEventListener('click', onResume);
   el.exportCsvBtn.addEventListener('click', onExportCsv);
   el.exportJsonBtn.addEventListener('click', onExportJson);
+  el.forceNextBtn.addEventListener('click', onForceNextPhase);
 
   // Loop de timers
   setInterval(tick, 1000);
@@ -328,30 +328,86 @@ function startRotationPhase() {
   updateControlsUI();
 }
 
-function performDeterministicRotation() {
-  // Regla: el documentador de cada pareja se queda en su estación y ahora será ejecutor.
-  // El ejecutor actual va a la siguiente estación como documentador. La última pasa a la primera.
-  if (appState.pairs.length === 0) return;
-  const nextPairs = [];
-  const len = appState.pairs.length;
-  for (let i = 0; i < len; i++) {
-    const current = appState.pairs[i];
-    const nextIndex = (i + 1) % len;
-    const next = appState.pairs[nextIndex];
-    const newExecutor = current.documenter;
-    const newDocumenter = next.executor;
-    const exercise = current.exercise; // se queda en la estación
-    const solo = current.solo && next.solo && current.executor === current.documenter ? true : false;
-    nextPairs.push({ executor: newExecutor, documenter: newDocumenter, exercise, solo });
+function onForceNextPhase() {
+  // Si está en pausa, reanudar al estado previo lógico
+  if (appState.phase === 'paused') {
+    onResume();
+    return;
   }
-  // Ajuste: si había una pareja de 1 persona, se mantiene como tal en su estación (ambos roles)
-  for (let i = 0; i < len; i++) {
-    if (appState.pairs[i].solo) {
-      const exercise = appState.pairs[i].exercise;
-      const person = appState.pairs[i].executor; // mismo nombre en ambos roles
-      nextPairs[i] = { executor: person, documenter: person, exercise, solo: true };
+  // idle -> empezar ronda
+  if (appState.phase === 'idle') {
+    onStartRound();
+    return;
+  }
+  // ronda -> pasar a rotación inmediata
+  if (appState.phase === 'round') {
+    startRotationPhase();
+    return;
+  }
+  // rotación -> aplicar rotación y arrancar nueva ronda
+  if (appState.phase === 'rotation') {
+    performDeterministicRotation();
+    const minutes = loadLocal(STORAGE_KEYS.roundMinutes, DEFAULTS.roundMinutes);
+    appState.roundNumber += 1;
+    appState.phase = 'round';
+    appState.roundRemainingSec = minutes * 60;
+    appState.rotationRemainingSec = 0;
+    persistCurrentRoundSnapshot();
+    persistState();
+    updateTimersUI();
+    updateControlsUI();
+  }
+}
+
+function performDeterministicRotation() {
+  // Rotación determinística con manejo especial para 1 persona (solo):
+  // - Si existe una estación "solo" (S):
+  //   * El "solo" pasa a ser documentador de la primera pareja no-solo (L[0]).
+  //   * El ejecutor de la última pareja no-solo (L[last]) pasa a ser el nuevo "solo" en S.
+  //   * En el resto de parejas no-solo, el documentador se queda y pasa a ejecutor; el ejecutor de la pareja anterior en L pasa a documentador.
+  // - Si no hay "solo": rotación estándar sobre todas: doc->exec, exec(prev)->doc.
+  if (appState.pairs.length === 0) return;
+  const len = appState.pairs.length;
+  const nextPairs = new Array(len);
+
+  const oldExec = appState.pairs.map(p => p.executor);
+  const oldDoc = appState.pairs.map(p => p.documenter);
+  const soloIndex = appState.pairs.findIndex(p => p.solo);
+
+  if (soloIndex >= 0) {
+    const soloPerson = oldExec[soloIndex];
+    // Construir lista de índices no-solo en orden
+    const L = [];
+    for (let i = 0; i < len; i++) { if (i !== soloIndex) L.push(i); }
+
+    if (L.length === 0) {
+      // Solo hay una estación y es "solo": permanece igual
+      nextPairs[soloIndex] = { executor: soloPerson, documenter: soloPerson, exercise: appState.pairs[soloIndex].exercise, solo: true };
+    } else {
+      const first = L[0];
+      const last = L[L.length - 1];
+
+      // Rellenar parejas no-solo
+      for (let r = 0; r < L.length; r++) {
+        const i = L[r];
+        const prevIdx = r === 0 ? null : L[r - 1];
+        const newExecutor = oldDoc[i];
+        const newDocumenter = r === 0 ? soloPerson : oldExec[prevIdx];
+        nextPairs[i] = { executor: newExecutor, documenter: newDocumenter, exercise: appState.pairs[i].exercise };
+      }
+
+      // Nueva estación "solo": ejecutor de la última no-solo
+      const newSolo = oldExec[last];
+      nextPairs[soloIndex] = { executor: newSolo, documenter: newSolo, exercise: appState.pairs[soloIndex].exercise, solo: true };
+    }
+  } else {
+    // Rotación estándar entre todas
+    for (let i = 0; i < len; i++) {
+      const prev = (i - 1 + len) % len;
+      nextPairs[i] = { executor: oldDoc[i], documenter: oldExec[prev], exercise: appState.pairs[i].exercise };
     }
   }
+
   appState.pairs = nextPairs;
   renderAssignments();
   persistState();
@@ -455,4 +511,3 @@ function onExportCsv() {
 
 // Autostart
 document.addEventListener('DOMContentLoaded', init);
-
