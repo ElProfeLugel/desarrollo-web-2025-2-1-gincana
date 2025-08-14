@@ -13,8 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 div.id = el;
                 contenedor.appendChild(div);
             });
-            
+
             let created_divs = Array.from(document.getElementsByTagName("div"));
+
+            created_divs.forEach(div => {
+                div.setAttribute("style", `background-color: #${Math.floor(Math.random()*16777215).toString(16)};`)
+                const estilo = window.getComputedStyle("").backgroundColor; 
+                div.innerText(estilo.backgroundColor)
+            });
+
             created = true;
         }
     
