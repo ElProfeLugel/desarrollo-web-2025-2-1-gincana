@@ -14,3 +14,4 @@ const filterButtons = document.querySelectorAll('.filter-buttons button');
                 });
             });
         });
+
