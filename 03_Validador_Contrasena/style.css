@@ -1,0 +1,19 @@
+ul {
+    padding: 0;
+}
+
+ul li{
+    color: bisque;
+    margin: auto;
+}
+
+
+ /*para cumplir el requisito de * Añadir o quitar una clase CSS (ej: `.valid`) a cada `<li>` para cambiar su estilo si el requisito se cumple o no. */ 
+ul li.valid{
+    color:green   /*para cuando se cumpla el requisito lo hacemos con valid */ 
+}
+
+ul li.invalid{
+    color:red;     /*para cuando no se cumpla el requisito lo hacemos con invalid */ 
+}
+
