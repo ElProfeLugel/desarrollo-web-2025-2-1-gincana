@@ -18,12 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             created_divs.forEach(div => {
                 div.setAttribute("style", `background-color: #${Math.floor(Math.random()*16777215).toString(16)};`)
-                const estilo = window.getComputedStyle("").backgroundColor; 
-                div.innerText(estilo.backgroundColor)
+            });
+
+            created_divs.forEach(div => {
+        
+               const colorHexa = window.getComputedStyle(div).backgroundColor;
+
+               const textoDiv = document.createTextNode(colorHexa);
+
+               div.appendChild(textoDiv);
             });
 
             created = true;
         }
+
+    
     
     });
 
