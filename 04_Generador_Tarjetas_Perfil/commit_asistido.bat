@@ -78,7 +78,7 @@ echo  Preparando y enviando tu trabajo al repositorio...
 echo(
 
 echo    [1/4] Preparando archivos (git add -A)...
-echo Git add -A
+echo Git add .
 if errorlevel 1 (
 	echo  [!] Error al preparar archivos.
 	popd
