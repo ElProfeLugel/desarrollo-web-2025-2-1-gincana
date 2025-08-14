@@ -2,16 +2,28 @@ class Datos{
     constructor(pregunta, opciones, respuestaCorrecta){
         this.pregunta = pregunta
         this.opciones = opciones
-        this.respuestaCorrecta
+        this.respuestaCorrecta = respuestaCorrecta
     }
 
-    
 }
 
+const preguntas=[
+    pregunta 
+];
+
+
+function agregarPregunta(pregunta, opciones, respuestaCorrecta){
+    let pregunta = new Datos(pregunta, opciones, respuestaCorrecta);
+    preguntas.push(pregunta);
+}
 
 document.addEventListener('DOMContentLoaded', ()=>{
-    const datos=[]
-    datos.push(["¿Cuáles son los colores primarios?", ["A. Amarillo, Azul, Rojo","B. Morado, rosado, gris", "C.Verde, Azul, Rojo"], "A. Amarillo, Azul, Rojo"])
-    let pregunta= document.getElementById("Pregunta")
+    agregarPregunta("Todo bien?", ["Bien", "Mal", "No sé"], "No sé");
+    let pregunta = document.getElementById("Pregunta");
+
+    for (let i = 0; i < preguntas.length; i++) {
+        pregunta.innerHTML += preguntas[i].pregunta ;
+      }
+
 })
 
