@@ -1,13 +1,12 @@
 body{
     font-family: arial;
     text-align: center;
-    background-color: white ;
+    background-color: rgb(219, 121, 121) ;
 }
 
 #galeria{
-    margin:30px;
+    margin:30px 70px;
     padding:20px;
-    max-width: 720px;
     background: white;
 }
 
@@ -24,9 +23,17 @@ button{
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
+    background-color: red;
+    color: white;
 }
 
-.info{
-    margin-top: 10px;
-    color: gray
+
+
+.info {
+  margin-top: 10px;
+  color: #555;
+}
+
+h1 {
+    color: white;
 }

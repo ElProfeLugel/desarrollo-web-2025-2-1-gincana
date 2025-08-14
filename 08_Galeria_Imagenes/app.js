@@ -45,6 +45,5 @@ const fotos = [
     mostrar();
   }
   
-  
-  document.addEventListener('DOMContentLoaded', mostrar);
+document.addEventListener('DOMContentLoaded', mostrar);
   
