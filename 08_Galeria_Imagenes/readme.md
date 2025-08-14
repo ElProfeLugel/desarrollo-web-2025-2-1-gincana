@@ -9,3 +9,5 @@
 
 ### Datos clave:
 Usa una variable de índice para rastrear la imagen actual. Para que la navegación sea cíclica, puedes usar el operador módulo (`%`) o condicionales `if` para reiniciar el índice a 0 o al final del array.
+
+

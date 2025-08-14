@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Galería Simple</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    img {
+      width: 90%;
+      max-width: 600px;
+      height: auto;
+      margin-bottom: 10px;
+      border: 2px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .info {
+      margin: 10px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mi Galería</h1>
+  
+  <img id="fotoActiva" src="" alt="Foto">
+  <p id="descripcionFoto" class="info">Descripción aquí</p>
+
+  <div>
+    <button id="botonRetroceder">← Anterior</button>
+    <button id="botonAvanzar">Siguiente →</button>
+  </div>
+
+  <p class="info">
+    <span id="numeracionActual">Foto 1</span> /
+    <span id="totalFotografias">Total: 3</span>
+  </p>
+
+  <script src="logica.js"></script>
+
+</body>
+</html>
