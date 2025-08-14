@@ -1,8 +1,7 @@
-const audio = document.getElementById("myAudio");
+const audio = document.getElementById("audioPlayer");
 const playPauseBtn = document.getElementById("playPauseBtn");
 const stopBtn = document.getElementById("stopBtn");
 const progressBar = document.getElementById("progressBar");
-
 let isPlaying = false;
 
 playPauseBtn.addEventListener("click", () => {
@@ -21,18 +20,14 @@ stopBtn.addEventListener("click", () => {
   audio.currentTime = 0;
   playPauseBtn.textContent = "Play";
   isPlaying = false;
+  updateProgressBar();
 });
 
 audio.addEventListener("timeupdate", () => {
+  updateProgressBar();
+});
+
+function updateProgressBar() {
   const progress = (audio.currentTime / audio.duration) * 100;
   progressBar.style.width = progress + "%";
-});
-
-// Opcional: Cambiar el botón Play/Pause visualmente
-audio.addEventListener("play", () => {
-  playPauseBtn.classList.add("playing");
-});
-
-audio.addEventListener("pause", () => {
-  playPauseBtn.classList.remove("playing");
-});
+}
