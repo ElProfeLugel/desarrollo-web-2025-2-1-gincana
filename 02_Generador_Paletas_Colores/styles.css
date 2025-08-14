@@ -1,0 +1,13 @@
+main {
+    display: flex; 
+    flex-direction: row;
+}
+
+* {
+    border: solid 2px black;
+}
+
+div {
+    width: 20px;
+    height: 20px;
+}
