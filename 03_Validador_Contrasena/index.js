@@ -1,18 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const contraseña=document.getElementById("password").addEventListener("input",Contraseña())
-
+    let contraseña=document.getElementById("password");
+    contraseña.addEventListener("input",Check);
 
     function Check(){
-    const password = contraseña.value
+        let password = contraseña.value
+        /* se verifica que sean minimo 8 caracteres */
+        let minimo8caracteres = document.getElementById("minimo8caracteres");
+        let contieneMayuscula = document.getElementById("ContieneMayuscula");
+        let contieneNumero = document.getElementById("ContieneNumero");
 
-/* se verifica que sean minimo 8 caracteres */
-const minimo8caracteres = document.getElementById("minimo8caracteres");
-if (password.length >= 8){  
-    minimo8caracteres.classList.add("valid");
-    minimo8caracteres.classList.remove("invalid");   
-}else { 
-    minimo8caracteres.classList.add("invalid");
-    minimo8caracteres.classList.remove("valid");
-}
+        if (password.length >= 8){  
+            minimo8caracteres.style.color = "green";
+             
+        }else { 
+            minimo8caracteres.setAttribute("style", "color:red;");
+        }
 
-})
+
+    }
+});
