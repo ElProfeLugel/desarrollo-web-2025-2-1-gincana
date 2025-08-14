@@ -1,7 +1,16 @@
-//Esta funcion nos ayudará a filtrar los elementos
+const filterButtons = document.querySelectorAll('.filter-buttons button');
+        const productCards = document.querySelectorAll('.product-card');
 
-function filterObjects(filter) {
-    var i, elements;
-    elements = document.getElementsByClassName("cars");
-    if (filter == "all")
-}
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.category;
+
+                productCards.forEach(card => {
+                    if (category === 'todos' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });

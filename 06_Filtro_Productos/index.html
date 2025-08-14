@@ -1,28 +1,50 @@
 <!DOCTYPE html>
-<html lang es>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Filtros De Productos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuadrícula de Carros con Filtros</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <div id = "buttons">
-        <button class = "btn"> Mostrar todos </button>
-        <button class = "btn"> Mazda </button>
-        <button class = "btn"> Nissan</button>
-        <button class = "btn"> Ford </button>
-        <button class = "btn"> Fiat </button>
+
+    <div class="filter-buttons">
+        <button data-category="todos">Todos</button>
+        <button data-category="sedan">Sedán</button>
+        <button data-category="suv">ford</button>
+        <button data-category="deportivo">Mazda</button>
     </div>
-    
-    <div class = "cars">
-        <div class = "car_id"> Mazda CX-30</div>
-        <div class = "car_id"> Mazda 2</div>
-        <div class = "car_id"> Ford fiesta</div>
-        <div class = "car_id"> Ford Raptor</div>
-        <div class = "car_id"> Nissan Sentra</div>
-        <div class = "car_id"> Fiat 500</div>
-    
+
+    <div class="grid-container">
+        
+        <div class="product-card" data-category="sedan">
+            <img src="imagen-sedan.jpg" alt="Sedán">
+            <h3>Sedán 1</h3>
+            <p>Descripción del Sedan 1</p>
+        </div>
+        <div class="product-card" data-category="suv">
+            <img src="imagen-suv.jpg" alt="SUV">
+            <h3>SUV 1</h3>
+            <p>Descripción del SUV 1</p>
+        </div>
+         <div class="product-card" data-category="deportivo">
+            <img src="imagen-deportivo.jpg" alt="Deportivo">
+            <h3>Deportivo 1</h3>
+            <p>Descripción del Deportivo 1</p>
+        </div>
+         <div class="product-card" data-category="sedan">
+            <img src="imagen-sedan2.jpg" alt="Sedán">
+            <h3>Sedán 2</h3>
+            <p>Descripción del Sedan 2</p>
+        </div>
+         <div class="product-card" data-category="suv">
+            <img src="imagen-suv2.jpg" alt="SUV">
+            <h3>SUV 2</h3>
+            <p>Descripción del SUV 2</p>
+        </div>
+        
     </div>
-    <script src = "script.js"></script>
+
+<script src="script.js" defer></script>
 </body>
 </html>
